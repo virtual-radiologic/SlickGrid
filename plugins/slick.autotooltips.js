@@ -19,7 +19,8 @@
     var _defaults = {
       enableForCells: true,
       enableForHeaderCells: false,
-      maxToolTipLength: null
+      maxToolTipLength: null,
+      disableForColumns: []
     };
     
     /**
@@ -47,17 +48,20 @@
     function handleMouseEnter(e) {
       var cell = _grid.getCellFromEvent(e);
       if (cell) {
-        var $node = $(_grid.getCellNode(cell.row, cell.cell));
-        var text;
-        if ($node.innerWidth() < $node[0].scrollWidth) {
-          text = $.trim($node.text());
-          if (options.maxToolTipLength && text.length > options.maxToolTipLength) {
-            text = text.substr(0, options.maxToolTipLength - 3) + "...";
+        var cellId = _grid.getColumns()[cell.cell].id;
+        if (options.disableForColumns.indexOf(cellId) < 0) {
+          var $node = $(_grid.getCellNode(cell.row, cell.cell));
+          var text;
+          if ($node.innerWidth() < $node[0].scrollWidth) {
+            text = $.trim($node.text());
+            if (options.maxToolTipLength && text.length > options.maxToolTipLength) {
+              text = text.substr(0, options.maxToolTipLength - 3) + "...";
+            }
+          } else {
+            text = "";
           }
-        } else {
-          text = "";
+          $node.attr("title", text);
         }
-        $node.attr("title", text);
       }
     }
     
