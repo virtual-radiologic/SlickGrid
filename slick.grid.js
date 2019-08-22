@@ -2640,16 +2640,13 @@ if (typeof Slick === "undefined") {
 			setCellCssStyles(options.selectedCellCssClass, hash);
 
 			if (simpleArrayEquals(previousSelectedRows, selectedRows)) {
-        trigger(self.onSelectedRowsChanged, { rows: getSelectedRows() }, e);
+				trigger(self.onSelectedRowsChanged, { rows: getSelectedRows() }, e);
 			}
 		}
 
 		// compare 2 simple arrays (integers or strings only, do not use to compare object arrays)
 		function simpleArrayEquals(arr1, arr2) {
-      var clone1 = arr1.slice(0);
-      var clone2 = arr2.slice(0);
-
-      return Array.isArray(clone1) && Array.isArray(clone2) && clone2.sort().toString() !== clone1.sort().toString();
+			return Array.isArray(arr1) && Array.isArray(arr2) && arr2.sort().toString() !== arr1.sort().toString();
 		}
 
 		function getColumns() {
